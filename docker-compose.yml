@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: taskdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - READ_TIMEOUT=30s
+      - WRITE_TIMEOUT=30s
+      - IDLE_TIMEOUT=60s
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - DB_NAME=taskdb
+      - DB_SSLMODE=disable
+      - BASIC_AUTH_USERNAME=admin
+      - BASIC_AUTH_PASSWORD=password123
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
