@@ -1,6 +1,11 @@
 # Task Management API
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/usernamesalah/task-be)](https://goreportcard.com/report/github.com/usernamesalah/task-be)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/usernamesalah/task-be/go.yml)
+
 A RESTful API for managing tasks built with Go, Echo framework, GORM, and PostgreSQL.
+
+**Project Status:** This is a feature-complete template for building RESTful APIs in Go following Clean Architecture principles. It is intended as a starting point for new projects.
 
 ## Features
 
@@ -168,15 +173,29 @@ Use Basic Authentication with the following credentials:
 curl -X POST http://localhost:3000/tasks \
   -H "Content-Type: application/json" \
   -H "Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM=" \
-  -d '{
+  -d 
+  {
     "title": "Complete project",
     "description": "Finish the task management API"
-  }'
+  }
 ```
 
 ### Get All Tasks
 ```bash
 curl http://localhost:3000/tasks
+```
+**Example Response:**
+```json
+[
+  {
+    "id": 1,
+    "title": "Complete project",
+    "description": "Finish the task management API",
+    "status": "IN_PROGRESS",
+    "created_at": "2023-10-27T10:00:00Z",
+    "updated_at": "2023-10-27T10:00:00Z"
+  }
+]
 ```
 
 ### Get Tasks with Pagination
@@ -194,9 +213,10 @@ curl "http://localhost:3000/tasks?status=TO_DO"
 curl -X PATCH http://localhost:3000/tasks/1 \
   -H "Content-Type: application/json" \
   -H "Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM=" \
-  -d '{
+  -d 
+  {
     "status": "IN_PROGRESS"
-  }'
+  }
 ```
 
 ### Delete a Task
@@ -250,7 +270,16 @@ The application implements graceful shutdown with a 30-second timeout:
 
 ## Testing
 
-The project includes unit tests for the service layer. Run tests with:
+The project includes unit tests for the service layer.
+
 ```bash
+# Run all tests
 go test ./...
+
+# Run tests with coverage analysis
+go test -cover ./...
 ```
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
